@@ -18,6 +18,7 @@ cd tmp
 zip -r ../${NAME}_linux.zip ${NAME}_linux
 cd ..
 rm tmp/* -rf #tmp cleanup
+
 # WINDOWS
 cat dev/build_data/love-0.7.2-win-x86/love.exe $NAME.love > tmp/$NAME.exe
 cp dev/build_data/love-0.7.2-win-x86/*.dll tmp/

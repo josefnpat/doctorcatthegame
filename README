@@ -1,3 +1,10 @@
+DOCTOR CAT: THE GAME
+
+This is the source code for the game.
+
+use build.sh for making the executables for linux, osx and win.
+
+if this is the first time you are building, run dev/build_data/download.sh .
 
       . .    ...  . ..    ..            . . ....                                
        .  . . .  .    ..  ..          . . ....  ..                              

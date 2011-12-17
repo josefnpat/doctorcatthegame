@@ -17,8 +17,8 @@ function love.load()
   img_pk = love.graphics.newImage("assets/pk.jpg")
   img_key = {}
   img_key[1] = love.graphics.newImage("assets/key_1.png")
-  img_key[1.5] = love.graphics.newImage("assets/key_1.5.png")
-  img_key[2] = love.graphics.newImage("assets/key_2.png")
+  --img_key[1.5] = love.graphics.newImage("assets/key_1.5.png")
+  --img_key[2] = love.graphics.newImage("assets/key_2.png")
   img_key[3] = love.graphics.newImage("assets/key_3.png")
   
   levelcat = {}

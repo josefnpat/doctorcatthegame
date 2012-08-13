@@ -15,7 +15,7 @@
 			<string>LoveDocument.icns</string>
 			<key>CFBundleTypeMIMETypes</key>
 			<array>
-				<string>application/x-love-game</string>
+				<string>appli	cation/x-love-game</string>
 			</array>
 			<key>CFBundleTypeName</key>
 			<string>Love Project</string>
@@ -50,7 +50,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Doctor Cat</string>
+	<string>none</string>
 	<key>CFBundlePackageType</key>
 	<string>LoVe</string>
 	<key>CFBundleSignature</key>

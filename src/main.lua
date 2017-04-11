@@ -1,4 +1,5 @@
 require("TEsound")
+
 TEsound.playLooping("assets/pk-strangerdanger-final.ogg", "music")
 love.mouse.setVisible( false )
 function love.load()
@@ -123,9 +124,9 @@ function love.draw()
     love.graphics.setColor(255,255,255,255)
     love.graphics.draw(bg[current_level],0,0)
     for i,v in ipairs(craps) do
-      if v.time + life_craps > love.timer.getMicroTime() then
-        if v.time + life_craps - 1 < love.timer.getMicroTime() then
-          if (love.timer.getMicroTime()*1000)%240 > 120 then
+      if v.time + life_craps > love.timer.getTime() then
+        if v.time + life_craps - 1 < love.timer.getTime() then
+          if (love.timer.getTime()*1000)%240 > 120 then
             love.graphics.draw(img_crap,v.x,v.y,0,-1+(2*v.rot),1,27,37)
           end
         else
@@ -138,7 +139,7 @@ function love.draw()
     end
     love.graphics.setColor(255,255,255,255)
     if scamper_for_level then
-      local temp_frame = love.timer.getMicroTime()*1000%480
+      local temp_frame = love.timer.getTime()*1000%480
       if temp_frame > 360 then
         love.graphics.draw(scamper_for_level.img.stand,scamper_for_level.x,scamper_for_level.y,0,1,1,scamper_for_level.img.stand:getWidth()/2)
       elseif temp_frame > 240 then
@@ -162,9 +163,9 @@ function love.draw()
     --love.graphics.circle("line",cat.x,cat.y,100,100) --cat intersection debug
     
     for i,v in ipairs(coins) do
-      if v.time + life_coins > love.timer.getMicroTime() then
-        if v.time + life_coins - 1 < love.timer.getMicroTime() then
-          if (love.timer.getMicroTime()*1000)%240 > 120 then
+      if v.time + life_coins > love.timer.getTime() then
+        if v.time + life_coins - 1 < love.timer.getTime() then
+          if (love.timer.getTime()*1000)%240 > 120 then
             love.graphics.draw(img_coin,v.x,v.y,v.rot,1,1,33,33)
           end
         else
@@ -173,8 +174,8 @@ function love.draw()
       end
     end
     for i,v in ipairs(ghostcats) do
-      if v.time + life_ghostcats > love.timer.getMicroTime() then
-        love.graphics.draw(img_ghostcat,v.x,v.y,v.rot+math.sin(love.timer.getMicroTime()-v.time),v.v_x/100,1,32,24)
+      if v.time + life_ghostcats > love.timer.getTime() then
+        love.graphics.draw(img_ghostcat,v.x,v.y,v.rot+math.sin(love.timer.getTime()-v.time),v.v_x/100,1,32,24)
       end
     end
     draw_overlay()
@@ -187,7 +188,7 @@ function love.draw()
     love.graphics.printf("Game Over!",0,48,800,"center")
     love.graphics.setFont(text_font)
     love.graphics.printf("Total Collected: $"..string.format("%.2f",(cat.level_coins[1]+cat.level_coins[2]+cat.level_coins[3])/4),0,136,800,"center")
-    local temp_frame = love.timer.getMicroTime()*1000%480
+    local temp_frame = love.timer.getTime()*1000%480
     for i = 1,3 do
       local i_x = 600 * i / 3 - 100
       local i_y = 330
@@ -269,14 +270,14 @@ function love.update(dt)
       local coin = {
         x = math.random(0,800),
         y = math.random(0,400),
-        time = love.timer.getMicroTime(),
+        time = love.timer.getTime(),
         rot = math.random(-1,1)
       }
       table.insert(coins,coin)
     end
     
     for i,v in ipairs(coins) do
-      if v.time + life_coins < love.timer.getMicroTime() then
+      if v.time + life_coins < love.timer.getTime() then
         table.remove(coins,i)
       end
       if distance(cat,v)<cat.rad then
@@ -294,14 +295,14 @@ function love.update(dt)
       local crap = {
         x = math.random(0,800),
         y = -33,
-        time = love.timer.getMicroTime(),
+        time = love.timer.getTime(),
         rot = math.random(0,1)
       }
       table.insert(craps,crap)
     end
     
     for i,v in ipairs(craps) do
-      if v.time + life_craps < love.timer.getMicroTime() then
+      if v.time + life_craps < love.timer.getTime() then
         table.remove(craps,i)
       end
       if v.y < 470 then
@@ -325,7 +326,7 @@ function love.update(dt)
       local ghostcat = {
         x = dir*866-33,
         y = math.random(1,4)*100,
-        time = love.timer.getMicroTime(),
+        time = love.timer.getTime(),
         rot = 0,
         v_x = dir*-200+100
       }
@@ -333,7 +334,7 @@ function love.update(dt)
     end
     
     for i,v in ipairs(ghostcats) do
-      if v.time + life_ghostcats < love.timer.getMicroTime() then
+      if v.time + life_ghostcats < love.timer.getTime() then
         table.remove(ghostcats,i)
       end
       v.x = v.x + v.v_x * dt
@@ -378,7 +379,7 @@ function love.update(dt)
     -- PLAYER GRAPHICS
     
     if (key_pressed.a or key_pressed.d) and not cat.jumping then
-      local temp_frame = (love.timer.getMicroTime()*1000)%480
+      local temp_frame = (love.timer.getTime()*1000)%480
       if temp_frame > 320 then
         cat.img = playercat.move_right
       elseif temp_frame > 240 then
@@ -522,7 +523,7 @@ function love.keypressed(key)
     key_pressed.s = true
   elseif key == "d" then
     key_pressed.d = true
-  elseif key == " " then
+  elseif key == "space" then
     if state == "title" then
       love.load()
       state = "intro"

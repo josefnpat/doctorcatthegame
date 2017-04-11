@@ -1,0 +1,4 @@
+src/git.lua
+builds/
+dev/build_data/
+*.love

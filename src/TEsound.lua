@@ -13,7 +13,7 @@ function TEsound.play(sound, tags, volume, pitch, func)
 	elseif type(sound) == "table" and #sound < 1 then return nil, "The list of sounds must have at least one filepath."
 	end
 	if type(sound) == "table" then sound = sound[math.random(#sound)] end
-	table.insert(TEsound.channels, { love.audio.newSource(sound), func, {volume or 1, pitch or 1}, tags=(type(tags) == "table" and tags or {tags}) })
+	table.insert(TEsound.channels, { love.audio.newSource(sound, "static"), func, {volume or 1, pitch or 1}, tags=(type(tags) == "table" and tags or {tags}) })
 	local s = TEsound.channels[#TEsound.channels]
 	s[1]:play()
 	s[1]:setVolume( (volume or 1) * TEsound.findVolume(tags) * (TEsound.volumeLevels.all or 1) )
@@ -76,7 +76,8 @@ end
 -- Cleans up finished sounds, freeing memory. Call frequently!
 function TEsound.cleanup()
 	for k,v in ipairs(TEsound.channels) do
-		if v[1]:isStopped() then
+		-- :isPaused was removed before v11.5
+		if v[1]:isPlaying() == false then
 			if v[2] then v[2](v[3]) end		-- allow sounds to use custom functions (primarily for looping, but be creative!)
 			table.remove(TEsound.channels, k)
 		end

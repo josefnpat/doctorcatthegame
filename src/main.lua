@@ -509,12 +509,18 @@ key_pressed.space = false;
 function love.keypressed(key)
   if key == "escape" then
     if state == "quit" then
-      love.event.push("q")    
+      --q is now quit for more verbose code
+      --now q bricks boot.lua
+      love.event.push("quit")    
     else
       state = "quit"
     end
   elseif key == "f11" then
-    love.graphics.toggleFullscreen()
+    --This is the new way of setting fulsscreen but it seems that the game
+    --relies on getting scaled or something, disabled for now, also background
+    --assets tells me that this game is designed for 4:3 displays
+    --TODO: make a canvas to wrap the original draw functions
+    --love.window.setFullscreen(not love.window.getFullscreen(), "desktop")
   elseif key == "w" then
     key_pressed.w = true
   elseif key == "a" then

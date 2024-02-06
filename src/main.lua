@@ -509,14 +509,14 @@ key_pressed.space = false;
 function love.keypressed(key)
   if key == "escape" then
     if state == "quit" then
-      --q is now quit for more verbose code
-      --now q bricks boot.lua
+      --Fix: "q" is now "quit" this make the code more
+      --now q bricks boot.lua and chrashes instantly
       love.event.push("quit")    
     else
       state = "quit"
     end
   elseif key == "f11" then
-    --This is the new way of setting fulsscreen but it seems that the game
+    --Fix: This is the new way of setting fulsscreen but it seems that the game
     --relies on getting scaled or something, disabled for now, also background
     --assets tells me that this game is designed for 4:3 displays
     --TODO: make a canvas to wrap the original draw functions

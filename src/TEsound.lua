@@ -13,6 +13,9 @@ function TEsound.play(sound, tags, volume, pitch, func)
 	elseif type(sound) == "table" and #sound < 1 then return nil, "The list of sounds must have at least one filepath."
 	end
 	if type(sound) == "table" then sound = sound[math.random(#sound)] end
+
+	--Fix: love.audio.newSource now requires to specify if the sound has to be cached
+	--or streamed from storage, picked "static" since the sounds are quite small.
 	table.insert(TEsound.channels, { love.audio.newSource(sound, "static"), func, {volume or 1, pitch or 1}, tags=(type(tags) == "table" and tags or {tags}) })
 	local s = TEsound.channels[#TEsound.channels]
 	s[1]:play()
@@ -76,7 +79,8 @@ end
 -- Cleans up finished sounds, freeing memory. Call frequently!
 function TEsound.cleanup()
 	for k,v in ipairs(TEsound.channels) do
-		-- :isPaused was removed before v11.5
+		--Fix: isPaused was removed before v11.5
+		--Replaced by functionally is the same alternative
 		if v[1]:isPlaying() == false then
 			if v[2] then v[2](v[3]) end		-- allow sounds to use custom functions (primarily for looping, but be creative!)
 			table.remove(TEsound.channels, k)
